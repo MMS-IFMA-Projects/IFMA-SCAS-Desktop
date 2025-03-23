@@ -12,7 +12,6 @@
   <ItemGroup>
     <Folder Include="Controller\" />
     <Folder Include="Entities\" />
-    <Folder Include="Database\" />
     <Folder Include="Auth\" />
     <Folder Include="Errors\" />
     <Folder Include="Services\" />
