@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <RootNamespace>IFMA_SCAS_Desktop</RootNamespace>
+    <RootNamespace></RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Entities\" />
     <Folder Include="Auth\" />
     <Folder Include="Errors\" />
     <Folder Include="Services\" />
