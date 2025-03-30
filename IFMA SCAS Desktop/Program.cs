@@ -15,7 +15,6 @@ namespace IFMA_SCAS_Desktop
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
 
-            
         }
     }
 }
