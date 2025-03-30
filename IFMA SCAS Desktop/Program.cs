@@ -1,3 +1,5 @@
+using Npgsql;
+
 namespace IFMA_SCAS_Desktop
 {
     internal static class Program
@@ -12,6 +14,8 @@ namespace IFMA_SCAS_Desktop
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
+
+            
         }
     }
 }
