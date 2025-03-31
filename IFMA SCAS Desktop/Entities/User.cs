@@ -17,5 +17,4 @@ namespace Entities
         public string registrationnumber { get; set; }
         public string phone { get; set; }
     }
-
 }

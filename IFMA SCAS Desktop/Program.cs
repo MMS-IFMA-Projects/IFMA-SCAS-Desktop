@@ -1,4 +1,8 @@
 using Npgsql;
+using System;
+using System.IO;
+using Microsoft.Extensions.Configuration.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace IFMA_SCAS_Desktop
 {
@@ -10,8 +14,13 @@ namespace IFMA_SCAS_Desktop
         [STAThread]
         static void Main()
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory()) // Set base path
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true); // Load JSON file
 
-            using (var context = new AppDbContext())
+            IConfiguration config = builder.Build();
+
+            using (var context = new AppDbContext(config))
             {
                 // Ensure database is created (for testing purposes)
                 context.Database.EnsureCreated();
