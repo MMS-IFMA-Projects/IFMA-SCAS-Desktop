@@ -15,11 +15,13 @@ namespace IFMA_SCAS_Desktop
         [STAThread]
         static void Main()
         {
-            UserRepository user = new UserRepository();
-            user.createUser(1, "Robs", "robs@algo.com", "1234", "01234", "aloalo");
+            //UserRepository user = new();
+            //user.createUser(1, "Robs", "robs@algo.com", "1234", "01234", "aloalo");
+
+            readAllUsersTest();
 
             /*
-             * using (var context = new AppDbContext())
+            using (var context = new AppDbContext())
             {
                 context.Database.EnsureCreated();
             }
@@ -30,6 +32,14 @@ namespace IFMA_SCAS_Desktop
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
 
+        }
+    
+        async static void readAllUsersTest()
+        {
+            UserRepository user = new();
+
+            Entities.User userTest = await user.GetUserByIdAsync(1);
+            Console.WriteLine(userTest.name);
         }
     }
 }
