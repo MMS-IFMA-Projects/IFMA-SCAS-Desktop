@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json;
+using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -12,46 +14,54 @@ using Microsoft.Extensions.Options;
 
 public class AppDbContext : DbContext
 {
-    protected readonly IConfiguration configuration;
+    protected readonly string connectionString;
     public DbSet<Entities.User> Users { get; set; }
+    private const string ConnectionFilePath = "appsettings.json";
 
-    public AppDbContext(IConfiguration configuration)
+    public AppDbContext()
     {
-        this.configuration = configuration;
+        string directory = AppContext.BaseDirectory;
+        string combinedPath = Path.Combine(directory, ConnectionFilePath);
+
+        while (directory != null && !File.Exists(combinedPath))
+        {
+            directory = Directory.GetParent(directory)?.FullName ?? throw new NullReferenceException("Unable to find connection file");
+            combinedPath = Path.Combine(directory, ConnectionFilePath);
+        }
+
+        string jsonString = File.ReadAllText(combinedPath) ?? throw new NullReferenceException("Unable to find connection file");
+        var data = JsonSerializer.Deserialize<JsonConfigFile>(jsonString) ?? throw new NullReferenceException("Failed to deserialize JSON file");
+
+        this.connectionString = data.ConnectionStrings.getConnectionString();
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        /*
-        string connectionString = this.configuration.GetConnectionString("DBConnection");
-        connectionString = string.Join(";", connectionString);
-        */
-
-        string[] connectionArgs = {
-            "Host=hardily-jointed-stud.data-1.use1.tembo.io",
-            //"Server=:5432/postgres",
-            "Port=5432",
-            "Database=sas",
-            "User Id=postgres",
-            "Password=d7Lxtw6E1yI0gXFa" 
-        };
-
-        string connectionString = string.Join(";", connectionArgs);
-
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(this.connectionString);
     }
-    /*
-    protected override void OnConfiguring()
+    
+    protected class JsonConfigFile
     {
-        string[] connectionString = {
-            "Host=hardily-jointed-stud.data-1.use1.tembo.io",
-            "Server=postgresql://postgres:d7Lxtw6E1yI0gXFa@hardily-jointed-stud.data-1.use1.tembo.io:5432/postgres",
-            "Database=sas",
-            "User Id=postgres",
-            "Password=d7Lxtw6E1yI0gXFa",
-            "Trusted_Connection=True"
-        };
-
-        optionsBuilder.UseNpgsql(string.Join(";", connectionString));
+        public ConnectionData ConnectionStrings { get; set; }
     }
-    */
+
+    protected class ConnectionData
+    {
+        public string Host{ get; set; }
+        public string Port { get; set; }
+        public string Database { get; set; }
+        public string UserId { get; set; }
+        public string Password { get; set; }
+
+        public string getConnectionString()
+        {
+            string[] connectionArgs = {
+                "Host=" + this.Host,
+                "Port=" + this.Port,
+                "Database=" + this.Database,
+                "User Id=" + this.UserId,
+                "Password=" + this.Password
+            };
+            return string.Join(";", connectionArgs);
+        }
+    }
 }

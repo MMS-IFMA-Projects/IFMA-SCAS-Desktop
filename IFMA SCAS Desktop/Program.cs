@@ -20,7 +20,7 @@ namespace IFMA_SCAS_Desktop
 
             IConfiguration config = builder.Build();
 
-            using (var context = new AppDbContext(config))
+            using (var context = new AppDbContext())
             {
                 // Ensure database is created (for testing purposes)
                 context.Database.EnsureCreated();
