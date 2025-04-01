@@ -15,10 +15,10 @@ namespace IFMA_SCAS_Desktop
         [STAThread]
         static void Main()
         {
-            //UserRepository user = new();
-            //user.createUser(1, "Robs", "robs@algo.com", "1234", "01234", "aloalo");
+            UserRepository user = new();
+            user.createUser(1, "Robs", "robs@algo.com", "1234", "01234", "9898989");
 
-            readAllUsersTest();
+            //readAllUsersTest();
 
             /*
             using (var context = new AppDbContext())

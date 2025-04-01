@@ -11,6 +11,7 @@ namespace Entities
     [Table("user", Schema = "public")]
     public class User
     {
+        [Key]
         public uint id { get; set; }
         public uint usertypeid { get; set; }
         public string name { get; set; }
