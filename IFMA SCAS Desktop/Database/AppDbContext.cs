@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Xml.Linq;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -14,8 +15,16 @@ using Microsoft.Extensions.Options;
 
 public class AppDbContext : DbContext
 {
-    protected readonly string connectionString;
+    //public DbSet<Entities.Request> Requests { get; set; }
+    //public DbSet<Entities.RequestType> RequestTypes { get; set; }
+    //public DbSet<Entities.Role> Roles { get; set; }
+    //public DbSet<Entities.Room> Rooms { get; set; }
+    //public DbSet<Entities.RoomAssignment> RoomAssignments { get; set; }
+    //public DbSet<Entities.Session> Sessions { get; set; }
     public DbSet<Entities.User> Users { get; set; }
+    //public DbSet<Entities.UserType> UserTypes { get; set; }
+
+    protected readonly string connectionString;
     private const string ConnectionFilePath = "appsettings.json";
 
     public AppDbContext()
