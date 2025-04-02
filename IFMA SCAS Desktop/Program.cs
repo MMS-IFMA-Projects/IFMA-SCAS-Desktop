@@ -16,7 +16,7 @@ namespace IFMA_SCAS_Desktop
         static void Main()
         {
             UserRepository user = new();
-            user.createUser(1, "Robs", "robs@algo.com", "1234", "01234", "9898989");
+            user.createUser("Robs", "rob@algo.com", "1234", "012354", "9898989");
 
             //readAllUsersTest();
 
@@ -29,8 +29,8 @@ namespace IFMA_SCAS_Desktop
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Login());
+            //ApplicationConfiguration.Initialize();
+            //Application.Run(new Login());
 
         }
     

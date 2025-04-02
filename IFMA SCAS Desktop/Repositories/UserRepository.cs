@@ -17,13 +17,18 @@ namespace Repositories
             _context.Database.EnsureCreated();
         }
 
-        public async Task<User> createUser(uint usertype, string name, string email, string password, string registrationnumber, string phone)
+        public async Task<User> createUser(string name, string email, string password, string registrationnumber, string phone)
         {
-            User userObj = new(usertype, name, email, password, registrationnumber, phone);
-            userObj.id = 4;
+            User userObj = new(name, email, password, registrationnumber, phone);
+            //userObj.id = 6;
 
             await this._context.Users.AddAsync(userObj);
-            await this._context.SaveChangesAsync();
+            var state = _context.Entry(userObj).State;
+            int changes = await this._context.SaveChangesAsync();
+
+
+            Console.WriteLine($"Rows affected: {changes}");
+            Console.WriteLine($"State: {_context.Entry(userObj).State}");
 
             return userObj;
         }
